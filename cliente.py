@@ -18,14 +18,14 @@ def recibir_mensajes(sock):
         try:
             data = bytearray()
             while True:
-                recvd = sock.recv(BUFFER_SIZE)
+                recvd = sock.recv(BUFFER_SIZE) #Recibir datos del servidor.
                 if not recvd:
                     break
                 data += recvd
                 if MESSAGE_DELIMITER in recvd:
                     msg = data.rstrip(MESSAGE_DELIMITER).decode('utf-8')
                     print(f"[CLIENTE] Mensaje Recibido: {msg}")
-                    if msg.lower() == "logout":
+                    if msg.lower() == "logout": #Finalizar la conexión si se recibe logout.
                         print("[CLIENTE] Desconectando del Servidor")
                         sock.close()
                         return
@@ -43,15 +43,15 @@ def iniciar_cliente():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print("[CLIENTE] Conectando")
-        s.connect((TCP_IP, TCP_PORT))
+        s.connect((TCP_IP, TCP_PORT)) #Conectarse al servidor.
         print(f"[CLIENTE] Conectado satisfactoriamente a {TCP_IP}:{TCP_PORT}")
 
         receiver_thread = threading.Thread(target=recibir_mensajes, args=(s,), daemon=True)
-        receiver_thread.start()
+        receiver_thread.start() #Iniciar un hilo para recibir mensajes.
 
         while True:
-            msg = input()
-            if msg.lower() == "logout":
+            msg = input() #Leer entrada del usuario y enviarla al servidor.
+            if msg.lower() == "logout": #Enviar logout y terminar la conexión.
                 s.sendall((msg + '\n').encode('utf-8'))
                 break
             s.sendall((msg + '\n').encode('utf-8'))
