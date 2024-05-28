@@ -1,5 +1,3 @@
-# sockets-python
-
 # Servidor y Cliente TCP Concurrente
 
 Este proyecto implementa un servidor y un cliente TCP concurrente en Python. El servidor acepta múltiples conexiones de clientes y permite la comunicación bidireccional. Además, los clientes pueden enviar mensajes que serán difundidos a todos los demás clientes conectados usando #.
