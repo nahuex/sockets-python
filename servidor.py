@@ -47,3 +47,19 @@ def contacto_cliente(conn, addr):
     print(f"[SERVIDOR] Desconectando {addr}")
     del clientes[addr]
     print(f"[SERVIDOR] Clientes conectados: {len(clientes)}")
+
+def iniciar_servidor():
+    """Inicia el Servidor TCP"""
+    print("[SERVIDOR] Iniciando")
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((TCP_IP, TCP_PORT))
+        s.listen()
+        print(f"[SERVIDOR] Escuchando en {TCP_PORT}")
+        while True:
+            conn, addr = s.accept()
+            print(f"[SERVIDOR] Nueva conexión de {addr}")
+            thread = threading.Thread(target=contacto_cliente, args=(conn, addr), daemon=True)
+            thread.start()
+
+if __name__ == "__main__":
+    iniciar_servidor()
