@@ -8,3 +8,9 @@ BUFFER_SIZE = 1024
 MESSAGE_DELIMITER = b'\n'
 
 clientes = {}  # Diccionario para almacenar las conexiones de clientes
+
+def broadcast(message, source_conn):
+    """Envía un mensaje a todos los clientes conectados excepto al remitente."""
+    for conn in clientes.values():
+        if conn != source_conn:
+            conn.sendall(message)
