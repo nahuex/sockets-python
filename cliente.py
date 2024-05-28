@@ -55,3 +55,6 @@ def iniciar_cliente():
                 s.sendall((msg + '\n').encode('utf-8'))
                 break
             s.sendall((msg + '\n').encode('utf-8'))
+
+if __name__ == "__main__":
+    iniciar_cliente()
