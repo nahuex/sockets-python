@@ -14,3 +14,9 @@ def broadcast(message, source_conn):
     for conn in clientes.values():
         if conn != source_conn:
             conn.sendall(message)
+
+def contacto_cliente(conn, addr):
+    """Maneja la comunicación con un cliente."""
+    print(f"[SERVIDOR] Conectado satisfactoriamente con {addr}")
+    clientes[addr] = conn
+    print(f"[SERVIDOR] Clientes conectados: {len(clientes)}")
