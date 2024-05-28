@@ -35,4 +35,23 @@ def recibir_mensajes(sock):
             break
         except Exception as e:
             print(f"[CLIENTE] Error inesperado: {e}")
-            break    
+            break
+
+def iniciar_cliente():
+    """Inicia el Cliente TCP"""
+    print("[CLIENTE] Iniciando")
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        print("[CLIENTE] Conectando")
+        s.connect((TCP_IP, TCP_PORT))
+        print(f"[CLIENTE] Conectado satisfactoriamente a {TCP_IP}:{TCP_PORT}")
+
+        receiver_thread = threading.Thread(target=recibir_mensajes, args=(s,), daemon=True)
+        receiver_thread.start()
+
+        while True:
+            msg = input()
+            if msg.lower() == "logout":
+                s.sendall((msg + '\n').encode('utf-8'))
+                break
+            s.sendall((msg + '\n').encode('utf-8'))
